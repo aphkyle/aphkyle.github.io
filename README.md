@@ -1,2 +1,13 @@
-# aphkyle.github.io
-github pages :)
+# aphkyle
+
+你成功揾到我，雖然我都唔知有冇人入過嚟
+
+自介：
+名：kyle
+歲：13
+生：1/14/09
+高：矮過某177標準男性
+特：唔開ig
+
+
+
