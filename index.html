@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <script>
+      async function dirTree(data, ul){
+        for (let item of data) {
+          let li = document.createElement("li");
+          let anchor = document.createElement("a");
+          anchor.setAttribute("href", item.path);
+          anchor.innerHTML = item.name;
+          li.append(anchor);
+          ul.append(li);
+
+          if (item.type === "dir"){
+            const response = await fetch(item.url);
+            const innerData = await response.json();
+            let innerUl = document.createElement("ul")
+            li.append(innerUl)
+            dirTree(innerData, innerUl)
+          }
+        }
+      }
+      window.onload = async () => {
+        const response = await fetch("https://api.github.com/repos/aphkyle/aphkyle.github.io/contents/");
+        const data = await response.json();
+        let ul = document.querySelector("ul");
+
+        console.log(data)
+
+        await dirTree(data, ul);
+      }
+    </script>
+  </head>
+  <body>
+    <a href="https://github.com/aphkyle/aphkyle.github.io/" ><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" width="50"></img></a>
+    <p>welcome to my boring webpage, less is more.. right?</p>
+    <ul></ul>
+  </body>
+</html>
