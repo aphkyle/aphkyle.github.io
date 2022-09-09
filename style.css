@@ -1,0 +1,13 @@
+body {
+  background:rgb(35, 32, 32); 
+  color: white;
+}
+a {
+  color: white;
+}
+pre {
+  white-space: pre-wrap;
+  color: white;
+  background: rgb(35, 32, 32);
+  padding: 1%;
+}

@@ -1,34 +1,12 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <script>
-      async function dirTree(data, ul){
-        for (let item of data) {
-          let li = document.createElement("li");
-          let anchor = document.createElement("a");
-          anchor.setAttribute("href", item.path);
-          anchor.innerHTML = item.name;
-          li.append(anchor);
-          ul.append(li);
-
-          if (item.type === "dir"){
-            const response = await fetch(item.url);
-            const innerData = await response.json();
-            let innerUl = document.createElement("ul")
-            li.append(innerUl)
-            dirTree(innerData, innerUl)
-          }
-        }
-      }
-      window.onload = async () => {
-        const response = await fetch("https://api.github.com/repos/aphkyle/aphkyle.github.io/contents/");
-        const data = await response.json();
-        let ul = document.querySelector("ul");
-        await dirTree(data, ul);
-      }
-    </script>
+    <link href="../style.css" rel="stylesheet">
+    <script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
+    <script src="../index.js"></script>
   </head>
   <body>
-    <a href="https://github.com/aphkyle/aphkyle.github.io/" ><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" width="50"></img><b>aphkyle's boring site</b></a>
+    <a href="https://github.com/aphkyle/"><img src="https://avatars.githubusercontent.com/u/81857274?s=400&v=4" width="50" style="border-radius: 30%;"></img>aphkyle's boring site </a>
     <p>welcome to my boring homepage, less is more.. right?</p>
     <ul></ul>
   </body>
