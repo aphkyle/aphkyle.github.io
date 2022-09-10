@@ -1,18 +1,20 @@
 async function dirTree(data, ul){
-  for (let item of data) {
-    let li = document.createElement("li");
-    let anchor = document.createElement("a");
-    anchor.setAttribute("href", `#/${item.path}`);
-    anchor.innerHTML = item.name;
-    li.append(anchor);
-    ul.append(li);
+  for (let item of data){
+    if (item.path.charAt(0) !== "."){
+      let li = document.createElement("li");
+      let anchor = document.createElement("a");
+      anchor.setAttribute("href", `#/${item.path}`);
+      anchor.innerHTML = item.name;
+      li.append(anchor);
+      ul.append(li);
 
-    if (item.type === "dir"){
-      const response = await fetch(item.url);
-      const innerData = await response.json();
-      let innerUl = document.createElement("ul");
-      li.append(innerUl);
-      dirTree(innerData, innerUl);
+      if (item.type === "dir"){
+        const response = await fetch(item.url);
+        const innerData = await response.json();
+        let innerUl = document.createElement("ul");
+        li.append(innerUl);
+        dirTree(innerData, innerUl);
+      }
     }
   }
 }
