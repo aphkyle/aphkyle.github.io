@@ -2,6 +2,7 @@ async function dirTree(data, ul){
   for (let item of data){
     if (item.path.charAt(0) !== "."){
       let li = document.createElement("li");
+      li.setAttribute("style", `list-style-type: ${item.type === "dir" ? "\1F4C1": "\1F4C4"}`)
       let anchor = document.createElement("a");
       anchor.setAttribute("href", `#/${item.path}`);
       anchor.innerHTML = item.name;
