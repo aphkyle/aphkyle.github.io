@@ -1,13 +1,32 @@
 body {
   background:rgb(35, 32, 32); 
   color: white;
-}
-a {
-  color: white;
+  font-family: sans-serif;
 }
 pre {
+  display: inline-flex;
   white-space: pre-wrap;
   color: white;
-  background: rgb(35, 32, 32);
+  background: rgb(10, 9, 9);
   padding: 1%;
+}
+ul {
+  list-style: none;
+}
+
+#fileBrowser{
+  display:inline-flex;
+  border-radius: 7%;
+  border-color: rgb(65, 64, 64);
+  background-color: #e2e2e2;
+  padding-right: 5%;
+}
+#fileBrowser a {
+  color: rgb(35, 32, 32);
+  text-decoration: none;
+  transform: all 20s ease-in-out;
+}
+#fileBrowser a:hover {
+  color: white;
+  background-color: rgb(16, 155, 235);
 }
