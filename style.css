@@ -1,5 +1,5 @@
 body {
-  background:rgb(35, 32, 32); 
+  background: rgb(35, 32, 32); 
   color: white;
   font-family: sans-serif;
 }
@@ -15,7 +15,7 @@ ul {
 }
 
 #fileBrowser{
-  display:inline-flex;
+  display: inline-flex;
   border-radius: 7%;
   border-color: rgb(65, 64, 64);
   background-color: #e2e2e2;
