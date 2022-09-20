@@ -4,7 +4,7 @@ function getFileExtension(path){
 
 async function dirTree(data, ul){
   for (let item of data){
-    if (item.path.charAt(0) !== "."){
+    if (document.location.pathname === "/" | item.path.charAt(0) !== "."){
       let li = document.createElement("li");
       let anchor = document.createElement("a");
       anchor.setAttribute("href", `?t=${item.type}/#/${item.path}`);
@@ -28,20 +28,25 @@ window.onhashchange = async () => {
     const path = window.location.hash.slice(1);
     document.querySelector("p").innerHTML = `you're now browsing '${path}'`;
     if (window.location.search === "?t=file/"){
-      const response = await fetch(`https://raw.githubusercontent.com/aphkyle/aphkyle.github.io/main/${path}`);
+      const response = await fetch(`https://raw.githubusercontent.com/aphkyle/aphkyle.github.io/main${path}`);
       console.log(response);
       let fileContent = await response.text();
       let html;
       switch (getFileExtension(path)){
         case "md":
           let converter = new showdown.Converter();
-          html = converter.makeHtml(fileContent);
+          converter.setOption('simpleLineBreaks', true);
+          converter.setOption('tables', true);
+          html = `<div style="color: white;">${converter.makeHtml(fileContent)}</div>`;
+          console.log(html)
+          break;
         case "html":
           html = fileContent;
+          break;
         default:
           html = `<pre><code>${fileContent}</code></pre>`;
-        document.querySelector("div").outerHTML = html;
       }
+      document.querySelector("div").outerHTML = html;
     } else {
       const response = await fetch(`https://api.github.com/repos/aphkyle/aphkyle.github.io/contents/${path}`);
       const data = await response.json();
