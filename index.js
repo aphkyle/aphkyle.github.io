@@ -4,10 +4,10 @@ function getFileExtension(path){
 
 async function dirTree(data, ul){
   for (let item of data){
-    if (document.location.pathname === "/" | item.path.charAt(0) !== "."){
+    if (item.path.charAt(0) !== "."){
       let li = document.createElement("li");
       let anchor = document.createElement("a");
-      anchor.setAttribute("href", `?t=${item.type}/#/${item.path}`);
+      anchor.setAttribute("href", `/#/${item.path}`);
       anchor.innerHTML = `${item.type === "dir" ? "📁": "📄"}${item.name}`;
       li.append(anchor);
       ul.append(li);
@@ -26,12 +26,16 @@ async function dirTree(data, ul){
 window.onhashchange = async () => {
   if (window.location.hash){
     const path = window.location.hash.slice(1);
-    document.querySelector("p").innerHTML = `you're now browsing '${path}'`;
-    if (window.location.search === "?t=file/"){
-      const response = await fetch(`https://raw.githubusercontent.com/aphkyle/aphkyle.github.io/main${path}`);
+    document.querySelector("p").innerHTML = `you're now browsing '${decodeURI(path)}'`;
+
+    const response = await fetch(`https://api.github.com/repos/aphkyle/aphkyle.github.io/contents/${path}`);
+    var hashchangedata = await response.json();
+    if (hashchangedata[0].type === "file"){
+      const response = await fetch(`https://raw.githubusercontent.com/aphkyle/aphkyle.github.io/main${decodeURI(path)}`);
       console.log(response);
       let fileContent = await response.text();
       let html;
+      // FILE TYPES
       switch (getFileExtension(path)){
         case "md":
           let converter = new showdown.Converter();
@@ -44,17 +48,17 @@ window.onhashchange = async () => {
           html = fileContent;
           break;
         default:
-          html = `<pre><code>${fileContent}</code></pre>`;
+          window.location.href = `https://raw.githubusercontent.com/aphkyle/aphkyle.github.io/main${path}`
       }
       document.querySelector("div").outerHTML = html;
+      // FILE TYPES==END
     } else {
-      const response = await fetch(`https://api.github.com/repos/aphkyle/aphkyle.github.io/contents/${path}`);
-      const data = await response.json();
       let ul = document.querySelector("ul");
       ul.innerHTML = ""
-      await dirTree(data, ul);
+      await dirTree(hashchangedata, ul);
     }
   } else {
+    // if dir
     const response = await fetch("https://api.github.com/repos/aphkyle/aphkyle.github.io/contents/");
     const data = await response.json();
     let ul = document.querySelector("ul");
