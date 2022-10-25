@@ -30,7 +30,7 @@ window.onhashchange = async () => {
 
     const response = await fetch(`https://api.github.com/repos/aphkyle/aphkyle.github.io/contents/${path}`);
     var hashchangedata = await response.json();
-    if (hashchangedata[0].type === "file"){
+    if (Array.isArray(hashchangedata)){
       const response = await fetch(`https://raw.githubusercontent.com/aphkyle/aphkyle.github.io/main${decodeURI(path)}`);
       console.log(response);
       let fileContent = await response.text();
@@ -44,11 +44,12 @@ window.onhashchange = async () => {
           html = `<div style="color: white;">${converter.makeHtml(fileContent)}</div>`;
           console.log(html)
           break;
-        case "html":
-          html = fileContent;
+        case "pdf":
+          window.location.href = `https://raw.githubusercontent.com/aphkyle/aphkyle.github.io/main${path}`
           break;
         default:
-          window.location.href = `https://raw.githubusercontent.com/aphkyle/aphkyle.github.io/main${path}`
+          html = fileContent;
+          break;
       }
       document.querySelector("div").outerHTML = html;
       // FILE TYPES==END
