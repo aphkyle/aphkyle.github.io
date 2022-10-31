@@ -48,7 +48,7 @@ window.onhashchange = async () => {
           html = `<div style="color: white;">${converter.makeHtml(fileContent)}</div>`;
           console.log(html)
           break;
-        case "pdf":
+        case "pdf", "xlsm":
           window.location.href = `https://raw.githubusercontent.com/aphkyle/aphkyle.github.io/main${path}`
           break;
         default:
